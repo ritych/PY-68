@@ -23,3 +23,8 @@ class NewDocumentsId(BaseModel):
 class DeleteDocumentsId(BaseModel):
     status: str
     message: str
+
+
+class GetDocumentsText(BaseModel):
+    status: str
+    text: str

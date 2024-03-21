@@ -7,7 +7,7 @@ from database import new_session
 from models import Documents, DocumentText
 import os
 
-from schemas import NewDocumentsId, DeleteDocumentsId
+from schemas import NewDocumentsId, DeleteDocumentsId, GetDocumentsText
 from tasks import analyze_image
 
 router = APIRouter(
@@ -37,7 +37,7 @@ async def upload_doc(file: UploadFile = File(...)) -> NewDocumentsId:
         return {'status': '200', 'id': new_doc.id}
 
 
-@router.post("/doc_delete")
+@router.delete("/doc_delete")
 async def delete_doc(doc_id: int) -> DeleteDocumentsId:
     async with new_session() as session:
         query = select(Documents).filter(Documents.id == doc_id)
@@ -55,7 +55,7 @@ async def delete_doc(doc_id: int) -> DeleteDocumentsId:
 
 
 @router.post("/doc_analyse")
-async def analyze_doc(doc_id: int):
+async def analyze_doc(doc_id: int) -> dict:
     async with new_session() as session:
         try:
             query = select(Documents).filter(Documents.id == doc_id)
@@ -71,7 +71,7 @@ async def analyze_doc(doc_id: int):
 
 
 @router.get("/get_text")
-async def get_doc(doc_id: int):
+async def get_doc(doc_id: int) -> GetDocumentsText:
     async with new_session() as session:
         try:
             query = select(DocumentText).filter(DocumentText.id_doc == doc_id)
