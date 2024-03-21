@@ -1,0 +1,36 @@
+version: "3.7"
+services:
+  redis:
+    image: redis:7
+    container_name: redis_app
+
+  app:
+    build:
+      context: .
+    container_name: fastapi_app
+    command: bash -c "uvicorn main:app --host 0.0.0.0"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./tasks.db:/tasks.db:delegated
+    depends_on:
+      - redis
+
+  celery:
+    build:
+      context: .
+    container_name: celery_app
+    command: bash -c "celery --app=tasks:celery worker -l INFO"
+    depends_on:
+      - redis
+
+  flower:
+    build:
+      context: .
+    container_name: flower_app
+    command: bash -c "celery --app=tasks:celery flower"
+    ports:
+      - "5555:5555"
+    depends_on:
+      - redis
+      - celery

@@ -50,6 +50,10 @@ orjson==3.8.5
 outcome==1.2.0
 packaging==23.0
 passlib==1.7.4
+#pillow==10.2.0
+#opencv-contrib-python==4.8.1.78
+#opencv-python==4.9.0.80
+#opencv-python-headless==4.8.1.78
 pendulum==2.1.2
 pluggy==1.0.0
 prompt-toolkit==3.0.36
@@ -60,6 +64,7 @@ pyflakes==3.0.1
 PyJWT==2.6.0
 pypika-tortoise==0.1.6
 pytest==7.2.1
+#pytesseract==0.3.10
 pytest-asyncio==0.20.3
 python-dateutil==2.8.2
 python-dotenv==0.21.0
